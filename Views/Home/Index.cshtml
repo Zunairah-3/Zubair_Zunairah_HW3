@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Zubair_Zunairah_HW3.Models.Book>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h2>Books</h2>
+
+<p>
+    Displaying @ViewBag.SelectedBooks of @ViewBag.AllBooks Books
+</p>
+
+<form asp-action="Index" asp-controller="Home" method="get">
+    <p class="form-group">
+        Search:
+        <input name="SearchString" class="form-control" /><br />
+
+<button type="submit" class="btn btn-primary">Search</button>
+<a asp-controller="Home" asp-action="DetailedSearch" class="btn btn-secondary">Detailed Search</a>
+<a asp-action="Index" class="btn btn-danger">Show All</a>
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Published Date</th>
+        <th>Genre</th>
+        <th>Price</th>
+        <th>Format</th>
+        <th></th>
+    </tr>
+</thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>@Html.DisplayFor(modelItem => item.Author)</td>
+            <td>@Html.DisplayFor(modelItem => item.PublishedDate)</td>
+            <td>@(item.Genre?.GenreName ?? "")</td>
+            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+            <td>@Html.DisplayFor(modelItem => item.BookFormat)</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.BookID">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
